@@ -25,8 +25,8 @@ class CloudAdmin
         return [
             'model' => $admin,
             'account_count' => $account_count,
-            'account_max' => $account_max,
-            'account_over_max' => $account_over_max,
+            'account_max' => -1,
+            'account_over_max' => 0,
             'permission_list' => AdminPermission::getList(),
         ];
     }
@@ -49,7 +49,7 @@ class CloudAdmin
         $auth_info = Cloud::getAuthInfo();
         $account_count = (Admin::find()->where(['is_delete' => 0])->count()) - 1;
         $account_max = $auth_info['data']['account_max'];
-        $account_over_max = $admin->isNewRecord && $account_max != -1 && $account_count >= $account_max;
+        $account_over_max = 0;//$admin->isNewRecord && $account_max != -1 && $account_count >= $account_max;
         if ($account_over_max) {
             return [
                 'code' => 1,
