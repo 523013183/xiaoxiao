@@ -1,0 +1,513 @@
+body {
+    display: block;
+    margin: 0;
+}
+#app, body, html {
+    height: 100%;
+}
+div {
+    display: block;
+}
+input, textarea, select, button, meter, progress {
+    -webkit-writing-mode: horizontal-tb !important;
+}
+input, textarea, select, button {
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 0em;
+    font: 400 11px system-ui;
+}
+input {
+    -webkit-appearance: textfield;
+    background-color: white;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    padding: 1px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+button, input, textarea {
+    font: inherit;
+}
+ol, ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.content {
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+.content .purchase .head {
+    background: #fff;
+}
+.content .purchase .head .image {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+.content .purchase .input {
+    padding: 10px 0;
+    background: #103086;
+}
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+.content .purchase .input h3 {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+}
+.content .purchase .input .form {
+    width: 85%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.content .purchase .head .logoBox {
+    position: relative;
+}
+.content .purchase .head .logoBox .logo {
+    width: 120px;
+    padding-top: 10px;
+    padding-left: 30px;
+}
+.content .purchase .head .logoBox .agencyCode {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+}
+h1 {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+.content h1, .content h2, .content h3, .content h4, .content h5 {
+    padding: 0;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+
+.content .purchase .head h1, .content .purchase .head h2 {
+    color: #103086;
+    text-align: center;
+}
+.content .purchase .head h2 {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.content .purchase .input .form {
+    width: 85%;
+    margin: 0 auto;
+    text-align: center;
+}
+.content .purchase .input .form .mobileNo {
+    display: block;
+    margin: 6px auto;
+    font-size: 20px;
+    background: #fff;
+    color: #000;
+    width: 100%;
+    border: 0 solid #fff;
+    border-radius: 22px;
+    padding: 6px 0;
+    text-align: center;
+}
+.van-checkbox {
+    overflow: hidden;
+    user-select: none;
+}
+.content .purchase .input .form .van-checkbox {
+    margin-bottom: 12px;
+}
+.van-checkbox__icon, .van-checkbox__label {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 20px;
+}
+.van-checkbox__icon {
+    height: 20px;
+}
+.van-icon {
+    position: relative;
+    font: 14px/1 vant-icon;
+    text-rendering: auto;
+    font-size: inherit;
+    -webkit-font-smoothing: antialiased;
+}
+.van-icon, .van-icon:before {
+    display: inline-block;
+}
+.van-checkbox__icon .van-icon {
+    font-size: 14px;
+    text-align: center;
+    line-height: inherit;
+    width: 20px;
+    height: 20px;
+    box-sizing: border-box;
+    border: 1px solid #e5e5e5;
+    transition: .2s;
+}
+.van-checkbox__icon--round .van-icon {
+    border-radius: 100%;
+}
+.van-checkbox__icon--checked .van-icon {
+    color: #fff;
+    border-color: #1989fa;
+    background-color: #1989fa;
+}
+.van-checkbox__label {
+    color: #323233;
+    margin-left: 10px;
+}
+.van-icon, .van-icon:before {
+    display: inline-block;
+}
+.van-icon-success:before {
+    content: "\F0AF";
+}
+.content .purchase .input .form .van-checkbox .agree {
+    color: #fff;
+    font-size: 13px;
+}
+.content .purchase .input .form .van-checkbox .agree a {
+    color: #fff;
+    font-size: 13px;
+    text-decoration: underline;
+}
+.van-button {
+    position: relative;
+    padding: 0;
+    display: inline-block;
+    height: 44px;
+    line-height: 42px;
+    border-radius: 2px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 16px;
+    text-align: center;
+    -webkit-appearance: none;
+    -webkit-text-size-adjust: 100%;
+}
+.van-button--primary {
+    color: #fff;
+    background-color: #ca182b;
+    border: 1px solid #ca182b;
+}
+.van-button--round {
+    border-radius: 10em;
+}
+.van-button--disabled {
+    opacity: .5;
+}
+.content .purchase .input .form .van-button {
+    margin: 6px auto;
+    width: 100%;
+    padding: 0;
+    font-size: 18px;
+    height: auto;
+    line-height: 34px;
+}
+.content .purchase .input h4 {
+    text-align: center;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+/**
+========level
+ */
+.level {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: #103086;
+    padding: 40px 0;
+}
+.level .sub-title {
+    text-align: center;
+}
+.level h1, .level h2, .level h3, .level h4, .level h5 {
+    padding: 0;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+.level .sub-title h1 {
+    color: #fff;
+    font-weight: bolder;
+    font-size: 26px;
+}
+.level .sub-title h2 {
+    color: #fff;
+    font-weight: 400;
+    font-size: 10px;
+}
+.level .desc {
+    width: 85%;
+    margin: 20px auto;
+}
+.level .desc h3 {
+    color: #fff;
+    font-size: 13px;
+    text-align: left;
+}
+.level .chart {
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+.van-row--flex {
+    display: flex;
+}
+.van-row--align-center {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.level .chart .van-row {
+    margin-top: 2px;
+}
+.van-col {
+    float: left;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.van-col--4 {
+    width: 16.66666667%;
+}
+.level .chart .van-col {
+    font-size: 10px;
+    color: #fff;
+    background: hsla(0,0%,100%,.4);
+    border-right: 2px solid #103086;
+    text-align: center;
+    height: 52px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.level .chart .van-col.bar {
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    background: transparent;
+}
+.level .chart .van-col.bar .level-1, .level .chart .van-col.bar .level-2 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    height: 100%;
+}
+.level .chart .van-col.bar .level-1 {
+    background: rgba(202,24,43,.5);
+    width: 16.66666667%;
+}
+.level .chart .van-col.bar .level-2 {
+    background: rgba(202,24,43,.6);
+    width: 33.33333333%;
+}
+.level .chart .van-col.bar .level-3, .level .chart .van-col.bar .level-4 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    height: 100%;
+}
+.level .chart .van-col.bar .level-3 {
+    background: rgba(202,24,43,.7);
+    width: 50%;
+}
+.level .chart .van-col.bar .level-4 {
+    background: rgba(202,24,43,.8);
+    width: 66.66666667%;
+}
+.level .chart .van-col.bar .level-5, .level .chart .van-col.bar .level-6 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    height: 100%;
+}
+.level .chart .van-col.bar .level-5 {
+    background: rgba(202,24,43,.9);
+    width: 83.33333333%;
+}
+.level .chart .van-col.bar .level-6 {
+    background: #ca182b;
+    width: 100%;
+}
+.level .hello {
+    width: 100%;
+    margin-top: 30px;
+    background: #ca182b;
+    padding: 30px 0;
+}
+.van-col--12 {
+    width: 50%;
+}
+.level .hello .van-col {
+    text-align: center;
+}
+.level .hello .van-col img {
+    width: 30%;
+}
+.level .hello .van-col h5 {
+    color: #fff;
+}
+
+.slogan {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: #103086;
+    padding: 20px 0;
+}
+.slogan .sub-title {
+    text-align: center;
+}
+.slogan h1, .slogan h2, .slogan h3, .slogan h4, .slogan h5 {
+    padding: 0;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+.slogan .sub-title h1 {
+    color: #fff;
+    font-weight: bolder;
+    font-size: 26px;
+}
+.slogan .sub-title h2 {
+    color: #fff;
+    font-weight: 400;
+    font-size: 10px;
+}
+.slogan .structure {
+    display: block;
+    width: 80%;
+    margin: 20px auto;
+}
+.slogan ul {
+    width: 85%;
+    margin: 40px auto;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.slogan ul li {
+    padding: 14px 12px;
+    border-radius: 16px;
+}
+.slogan ul li:nth-of-type(odd) {
+    background: #fff;
+    color: #ca182b;
+}
+.slogan ul li:nth-of-type(2n) {
+    background: #ca182b;
+    color: #fff;
+}
+.slogan ul h3 {
+    font-size: 12px;
+}
+.slogan ul h4 {
+    font-size: 8px;
+}
+
+.about {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: #eceff4;
+    padding: 40px 0;
+}
+.about .sub-title {
+    text-align: center;
+}
+.about h1, .about h2, .about h3, .about h4, .about h5 {
+    padding: 0;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+.about .sub-title h1 {
+    color: #fff;
+    font-weight: bolder;
+    font-size: 26px;
+}
+.about .desc, .about .sub-title>h1, .about .sub-title>h2 {
+    color: #103086;
+}
+.about .desc {
+    width: 85%;
+    margin: 40px auto;
+}
+.about .desc h1 {
+    margin-top: 18px;
+    font-size: 14px;
+}
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+.about .desc p {
+    margin: 5px;
+    font-size: 12px;
+}
+.about .desc img {
+    width: 50%;
+    margin: 30px auto;
+    margin-bottom: 0;
+    display: block;
+}
+
+
+
+
+

@@ -1928,6 +1928,25 @@ class Menu
                     ],
                 ],
             ],
+            [
+                'name' => 'key码管理',
+                'is_menu' => true,
+                'route' => 'mch/key/key',
+                'icon' => 'icon-service',
+                'children' => [
+                    [
+                        'name' => 'key码管理',
+                        'is_menu' => true,
+                        'route' => 'mch/key/key',
+                        'action' => [
+                            [
+                                'name' => 'key码编辑',
+                                'route' => 'mch/key/key-edit'
+                            ],
+                        ]
+                    ],
+                ],
+            ],
         ];
     }
 }
