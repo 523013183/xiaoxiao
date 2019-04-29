@@ -11,12 +11,14 @@ namespace app\modules\mch\models;
 use app\models\Express;
 use app\models\FormId;
 use app\models\Goods;
+use app\models\KeyCode;
 use app\models\Order;
 use app\models\OrderDetail;
 use app\models\Store;
 use app\models\User;
 use app\models\WechatTemplateMessage;
 use app\models\WechatTplMsgSender;
+use app\utils\Sms;
 
 class OrderSendForm extends MchModel
 {
@@ -158,13 +160,22 @@ class OrderSendForm extends MchModel
                 'msg'=>'快递公司不正确'
             ];
         }
-
         $order->express = $this->express;
         $order->express_no = $this->express_no;
         $order->words = $this->words;
         $order->is_send = 1;
         $order->send_time = time();
         if ($order->save()) {
+            $keyCode = KeyCode::findOne([
+                'status' => 0
+            ]);
+            $sms = new Sms();
+            $smsRe = $sms->sendSmsByTeddy($order->mobile, $keyCode['code']);
+            if ($smsRe['status'] == 1) {
+                $keyCode->status = 1;
+                $keyCode->order_id = $order->id;
+                $keyCode->save();
+            }
             try {
                 $wechat_tpl_meg_sender = new WechatTplMsgSender($this->store_id, $order->id, $this->getWechat());
                 $wechat_tpl_meg_sender->sendMsg();

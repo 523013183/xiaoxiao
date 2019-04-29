@@ -263,4 +263,41 @@ class Sms
             'msg' => '成功'
         ];
     }
+
+    /**
+     * 发送短信（泰迪熊）
+     * @param unknown $mobile
+     * @param unknown $smsSign
+     * @param unknown $smsParam
+     * @param unknown $templateCode
+     */
+    public function sendSmsByTeddy($mobile, $smsParam){
+        $url = "http://server-usp.teddymobile.cn/api/sms/vSend";
+        if (is_array($smsParam)) {
+            $paramData = implode("##", $smsParam);
+        } else {
+            $paramData = $smsParam;
+        }
+        $post_data = [
+            "account"=>'td_hmhd',
+            "password"=> md5('hmhd0420'),
+            "data" => [
+                'sign' => '【华美互动】',
+                "template"=> '尊敬的用户，您购买的华美一元外教学习兑换码已生成{},请前往兑换页 http://t.cn/ESM4X70将兑换码复制拷贝并注册下载当天即可登录学习，7天无理由退款！',
+                "param" => [
+                    $mobile => $paramData
+                ]
+            ]
+        ];
+        $helper = new CurlHelper();
+
+        $resp = $helper->post($url, json_encode($post_data));
+        $resp = json_decode($resp);
+        if ($resp && $resp->error_code==0) {
+            return array('status' => 1, 'msg' => '已发送成功, 请注意查收');
+        } else {
+            return array('status' => -1, 'msg' => '发送失败:'.$resp->error_msg.' , 错误代码:'.$resp->error_code  . "，值" . json_encode($post_data));
+        }
+
+    }
 }
