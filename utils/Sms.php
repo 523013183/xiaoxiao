@@ -278,18 +278,31 @@ class Sms
         } else {
             $paramData = $smsParam;
         }
+        //生成sina短地址
+        $tUrl = 'http://api.t.sina.com.cn/short_url/shorten.json?source=4223922328&url_long=' . urlencode("https://h5.waijiao365.cn/redeem?p=WDGNzHRy&mobile=" . $mobile . "&redeemCode=" . $paramData);
+        $helper = new CurlHelper();
+        $tUrlN = $helper->get($tUrl);
+        $tUrlN = json_decode($tUrlN, true);
+        if (isset($tUrlN[0]['url_short'])) {
+            $shortUrl = $tUrlN[0]['url_short'];
+            $paramData = $shortUrl;
+            $template = '尊敬的用户，您己成功购买的华美一元外教课程，请前往注册确认绑定的手机号{} 当天即可学习，7天无理由退款！';
+        } else {
+            $shortUrl = 'http://t.cn/ESM4X70';
+            $paramData = $paramData . '##' . $shortUrl;
+            $template = '尊敬的用户，您购买的华美一元外教学习兑换码已生成{},请前往兑换页{}将兑换码复制拷贝并注册下载当天即可登录学习，7天无理由退款！';
+        }
         $post_data = [
             "account"=>'td_hmhd',
             "password"=> md5('hmhd0420'),
             "data" => [
                 'sign' => '【华美互动】',
-                "template"=> '尊敬的用户，您购买的华美一元外教学习兑换码已生成{},请前往兑换页 http://t.cn/ESM4X70将兑换码复制拷贝并注册下载当天即可登录学习，7天无理由退款！',
+                "template"=> $template,
                 "param" => [
                     $mobile => $paramData
                 ]
             ]
         ];
-        $helper = new CurlHelper();
 
         $resp = $helper->post($url, json_encode($post_data));
         $resp = json_decode($resp);
