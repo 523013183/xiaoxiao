@@ -8,12 +8,14 @@
 
 namespace app\modules\mch\models;
 
+use app\extensions\SendMail;
 use app\models\Express;
 use app\models\FormId;
 use app\models\Goods;
 use app\models\KeyCode;
 use app\models\Order;
 use app\models\OrderDetail;
+use app\models\OrderForm;
 use app\models\Store;
 use app\models\User;
 use app\models\WechatTemplateMessage;
@@ -126,6 +128,12 @@ class OrderSendForm extends MchModel
             'id' => $this->order_id,
             'mch_id' => 0,
         ]);
+        //邮箱
+        /*$orderForm = OrderForm::findOne([
+            'order_id' => $this->order_id,
+            'key' => '接收邮箱'
+        ]);
+        $sendMail = $orderForm['value'];*/
         if (!$order) {
             return [
                 'code' => 1,
@@ -171,10 +179,17 @@ class OrderSendForm extends MchModel
             ]);
             $sms = new Sms();
             $smsRe = $sms->sendSmsByTeddy($order->mobile, $keyCode['code']);
+//            $mail = new SendMail($this->store_id, $order->id);
+//            $smsRe = $mail->sendKeyCodeMail($sendMail, $order->mobile, $keyCode['code']);
             if ($smsRe['status'] == 1) {
                 $keyCode->status = 1;
                 $keyCode->order_id = $order->id;
                 $keyCode->save();
+            } else {
+                return [
+                    'code' => 1,
+                    'msg' => $smsRe['msg']
+                ];
             }
             try {
                 $wechat_tpl_meg_sender = new WechatTplMsgSender($this->store_id, $order->id, $this->getWechat());

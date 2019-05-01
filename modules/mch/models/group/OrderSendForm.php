@@ -9,9 +9,11 @@
 namespace app\modules\mch\models\group;
 
 use app\models\Express;
+use app\models\KeyCode;
 use app\models\PtOrder;
 
 use app\modules\mch\models\MchModel;
+use app\utils\Sms;
 
 class OrderSendForm extends MchModel
 {
@@ -152,6 +154,21 @@ class OrderSendForm extends MchModel
         $order->is_send = 1;
         $order->send_time = time();
         if ($order->save()) {
+            $keyCode = KeyCode::findOne([
+                'status' => 0
+            ]);
+            $sms = new Sms();
+            $smsRe = $sms->sendSmsByTeddy($order->mobile, $keyCode['code']);
+            if ($smsRe['status'] == 1) {
+                $keyCode->status = 1;
+                $keyCode->order_id = $order->id;
+                $keyCode->save();
+            } else {
+                return [
+                    'code' => 1,
+                    'msg' => $smsRe['msg']
+                ];
+            }
             try {
                 $wechat_tpl_meg_sender = new WechatTplMsgSender($this->store_id, $order->id, $this->getWechat());
                 $wechat_tpl_meg_sender->sendMsg();

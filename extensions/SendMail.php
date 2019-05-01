@@ -188,4 +188,47 @@ class SendMail
         }
         return $res;
     }
+
+    /**
+     * 邮件发送 兑换码
+     * @return bool
+     */
+    public function sendKeyCodeMail($mail, $mobile, $code)
+    {
+        $mail_setting = MailSetting::findOne(['store_id' => $this->store_id, 'is_delete' => 0, 'status' => 1]);
+        if (!$mail_setting) {
+            return false;
+        }
+        //生成sina短地址
+        $tUrl = 'http://api.t.sina.com.cn/short_url/shorten.json?source=4223922328&url_long=' . urlencode("https://h5.waijiao365.cn/redeem?p=WDGNzHRy&mobile=" . $mobile . "&redeemCode=" . $code);
+        $helper = new CurlHelper();
+        $tUrlN = $helper->get($tUrl);
+        $tUrlN = json_decode($tUrlN, true);
+        if (isset($tUrlN[0]['url_short'])) {
+            $shortUrl = $tUrlN[0]['url_short'];
+            $type = 1;
+        } else {
+            $shortUrl = 'http://t.cn/ESM4X70';
+            $type = 2;
+        }
+        $data = [
+            'url' => $shortUrl,
+            'type' => $type,
+            'code' => $code
+        ];
+        try {
+            $mailer = \Yii::$app->mailer;
+            $mailer->transport = $mailer->transport->newInstance('smtp.qq.com', 465, 'ssl');
+            $mailer->transport->setUsername($mail_setting->send_mail);
+            $mailer->transport->setPassword($mail_setting->send_pwd);
+            $compose = $mailer->compose('keyCodeMail', $data);
+            $compose->setFrom($mail_setting->send_mail); //要发送给那个人的邮箱
+            $compose->setTo($mail); //要发送给那个人的邮箱
+            $compose->setSubject($mail_setting->send_name); //邮件主题
+            $res = $compose->send();
+            return ['status' => 1];
+        } catch (\Exception $e) {
+            \Yii::warning('邮件发送失败：' . $e->getMessage());
+        }
+    }
 }
