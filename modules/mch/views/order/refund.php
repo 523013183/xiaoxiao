@@ -314,10 +314,15 @@ $urlHandle = $urlManager->createUrl(['mch/order/refund-handle']);
                                             </div>
                                         <?php endif; ?>
                                     <?php else : ?>
-                                        <div class="mb-2">
+                                        <!--<div class="mb-2">
                                             <a href="javascript:" class="btn btn-sm btn-success agree-btn-1"
                                                data-toggle="modal" data-target="#retreatModal"
-                                               onclick="refund_retreat(<?= $order_item['order_refund_id'] ?>,<?= $order_item['refund_price'] ?>)"
+                                               onclick="refund_retreat(<?/*= $order_item['order_refund_id'] */?>,<?/*= $order_item['refund_price'] */?>)"
+                                               data-id="<?/*= $order_item['order_refund_id'] */?>"
+                                               data-price="<?/*= $order_item['refund_price'] */?>">同意退货</a>
+                                        </div>-->
+                                        <div class="mb-2">
+                                            <a href="javascript:" class="btn btn-sm btn-success agree-btn-3"
                                                data-id="<?= $order_item['order_refund_id'] ?>"
                                                data-price="<?= $order_item['refund_price'] ?>">同意退货</a>
                                         </div>
