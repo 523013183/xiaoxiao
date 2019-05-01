@@ -801,7 +801,7 @@ $urlPlatform = Yii::$app->requestedRoute;
                 if (res.code == 1) {
                     btn.btnReset();
                     $.alert({
-                        content: res.msg,
+                        content: '<br>请复制以下信息手动发送：<br>' + res.msg,
                         confirm: function () {
                         }
                     });

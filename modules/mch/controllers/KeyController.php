@@ -32,6 +32,7 @@ class KeyController extends Controller
         return $this->render('key', [
             'list' => $res['list'],
             'pagination' => $res['pagination'],
+            'row_count' => $res['row_count']
         ]);
     }
     /**

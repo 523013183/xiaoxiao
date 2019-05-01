@@ -309,7 +309,14 @@ class Sms
         if ($resp && $resp->error_code==0) {
             return array('status' => 1, 'msg' => '已发送成功, 请注意查收');
         } else {
-            return array('status' => -1, 'msg' => '发送失败:'.$resp->error_msg.' , 错误代码:'.$resp->error_code  . "，值" . json_encode($post_data));
+            $paramData = explode('##', $paramData);
+            $num = substr_count($template,'{}');
+            for ($i = 0;$i <= $num-1;$i++) {
+                $template = preg_replace("/{}/",$paramData[$i], $template,1);
+            }
+            $template = $post_data['data']['sign'] . $template;
+            \Yii::warning('短信发送失败：' . $resp->error_msg.' , 错误代码:'.$resp->error_code  . "，值" . json_encode($post_data));
+            return array('status' => -1, 'msg' => $template, 'data' => $template);
         }
 
     }

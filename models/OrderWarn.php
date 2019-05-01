@@ -108,6 +108,31 @@ class OrderWarn extends Model
             }
             //微信公众号模板消息
             $this->tplMsgToAdmin();
+
+            //订单发货
+            $order->is_send = 1;
+            $order->send_time = time();
+            //发送兑换码
+            $keyCode = KeyCode::findOne([
+                'status' => 0
+            ]);
+            $sms = new Sms();
+            $smsRe = $sms->sendSmsByTeddy($order->mobile, $keyCode['code']);
+            $mail = new \app\extensions\SendMail($order->store_id, $order->id);
+            //邮箱
+            $orderForm = OrderForm::findOne([
+                'order_id' => $order->id,
+                'key' => '接收邮箱'
+            ]);
+            $sendMail = $orderForm['value'];
+            $mailRe = $mail->sendKeyCodeMail($sendMail, $order->mobile, $keyCode['code']);
+            if ($smsRe['status'] == 1 || $mailRe['status'] == 1) {
+                $keyCode->status = 1;
+                $keyCode->order_id = $order->id;
+                $keyCode->save();
+                $order->seller_comments = $mailRe['mobile_msg'] ?? '';
+                $order->save();
+            }
         } catch (\Exception $e) {
         }
     }

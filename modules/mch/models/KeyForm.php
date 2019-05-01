@@ -10,6 +10,7 @@
 namespace app\modules\mch\models;
 
 use app\models\Key;
+use app\models\KeyCode;
 use app\opening\ApiCode;
 use yii\data\Pagination;
 
@@ -48,13 +49,14 @@ class KeyForm extends MchModel
     // key查询
     public function search()
     {
-        $query = Key::find()->alias('a')->where([
+        $query = KeyCode::find()->alias('a')->where([
+            'status' => 0
         ]);
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'page' => $this->page - 1]);
         $list = $query->select([
             'a.*'
-        ])->limit($pagination->limit)->offset($pagination->offset)->orderBy('a.id DESC')->asArray()->all();
+        ])->limit($pagination->limit)->offset($pagination->offset)->orderBy('a.id asc')->asArray()->all();
         return [
             'row_count' => $count,
             'page_count' => $pagination->pageCount,

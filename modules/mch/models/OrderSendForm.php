@@ -129,11 +129,11 @@ class OrderSendForm extends MchModel
             'mch_id' => 0,
         ]);
         //邮箱
-        /*$orderForm = OrderForm::findOne([
+        $orderForm = OrderForm::findOne([
             'order_id' => $this->order_id,
             'key' => '接收邮箱'
         ]);
-        $sendMail = $orderForm['value'];*/
+        $sendMail = $orderForm['value'];
         if (!$order) {
             return [
                 'code' => 1,
@@ -173,38 +173,41 @@ class OrderSendForm extends MchModel
         $order->words = $this->words;
         $order->is_send = 1;
         $order->send_time = time();
-        if ($order->save()) {
-            $keyCode = KeyCode::findOne([
-                'status' => 0
-            ]);
-            $sms = new Sms();
-            $smsRe = $sms->sendSmsByTeddy($order->mobile, $keyCode['code']);
-//            $mail = new SendMail($this->store_id, $order->id);
-//            $smsRe = $mail->sendKeyCodeMail($sendMail, $order->mobile, $keyCode['code']);
-            if ($smsRe['status'] == 1) {
-                $keyCode->status = 1;
-                $keyCode->order_id = $order->id;
-                $keyCode->save();
+        //发送兑换码
+        $keyCode = KeyCode::findOne([
+            'status' => 0
+        ]);
+        $sms = new Sms();
+        $smsRe = $sms->sendSmsByTeddy($order->mobile, $keyCode['code']);
+        $mail = new SendMail($this->store_id, $order->id);
+        $smsRe = $mail->sendKeyCodeMail($sendMail, $order->mobile, $keyCode['code']);
+        if ($smsRe['status'] == 1) {
+            $keyCode->status = 1;
+            $keyCode->order_id = $order->id;
+            $keyCode->save();
+            $order->seller_comments = $smsRe['mobile_msg'];
+            if ($order->save()) {
+                try {
+                    $wechat_tpl_meg_sender = new WechatTplMsgSender($this->store_id, $order->id, $this->getWechat());
+                    $wechat_tpl_meg_sender->sendMsg();
+                } catch (\Exception $e) {
+                    \Yii::warning($e->getMessage());
+                }
+                return [
+                    'code' => 0,
+                    'msg' => '发货成功',
+                ];
             } else {
                 return [
                     'code' => 1,
-                    'msg' => $smsRe['msg']
+                    'msg' => '操作失败',
                 ];
             }
-            try {
-                $wechat_tpl_meg_sender = new WechatTplMsgSender($this->store_id, $order->id, $this->getWechat());
-                $wechat_tpl_meg_sender->sendMsg();
-            } catch (\Exception $e) {
-                \Yii::warning($e->getMessage());
-            }
-            return [
-                'code' => 0,
-                'msg' => '发货成功',
-            ];
         } else {
             return [
                 'code' => 1,
-                'msg' => '操作失败',
+                'msg' => $smsRe['msg'],
+                'data' => $smsRe['data']
             ];
         }
     }

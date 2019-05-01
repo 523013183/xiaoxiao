@@ -218,15 +218,24 @@ class SendMail
         ];
         try {
             $mailer = \Yii::$app->mailer;
-            $mailer->transport = $mailer->transport->newInstance('smtp.qq.com', 465, 'ssl');
+            $mailer->transport = $mailer->transport->newInstance('smtp.mail.qq.com', 465, 'ssl');
             $mailer->transport->setUsername($mail_setting->send_mail);
             $mailer->transport->setPassword($mail_setting->send_pwd);
             $compose = $mailer->compose('keyCodeMail', $data);
-            $compose->setFrom($mail_setting->send_mail); //要发送给那个人的邮箱
+            $compose->setFrom([$mail_setting->send_mail => '华美一元外教']); //要发送给那个人的邮箱
             $compose->setTo($mail); //要发送给那个人的邮箱
-            $compose->setSubject($mail_setting->send_name); //邮件主题
+            $compose->setSubject('【华美互动】华美一元外教课程兑换码'); //邮件主题
             $res = $compose->send();
-            return ['status' => 1];
+
+            if ($type == 1) {
+                $mobileMsg = '【华美互动】尊敬的用户，您己成功购买的华美一元外教课程，请前往注册确认绑定的手机号 ' . $data['url'] . ' 当天即可学习，7天无理由退款！';
+            } else {
+                $mobileMsg = '【华美互动】尊敬的用户，您购买的华美一元外教学习兑换码已生成' . $data['code'] . ',请前往兑换页' . $data['url'] . '将兑换码复制拷贝并注册下载当天即可登录学习，7天无理由退款！';
+            }
+            return [
+                'status' => 1,
+                'mobile_msg' => $mobileMsg
+            ];
         } catch (\Exception $e) {
             \Yii::warning('邮件发送失败：' . $e->getMessage());
         }
