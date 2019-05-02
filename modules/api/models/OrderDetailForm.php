@@ -153,7 +153,8 @@ class OrderDetailForm extends ApiModel
                 'words' => $order->words,
                 'pay_type' => $order->pay_type,
                 'integral'=>\Yii::$app->serializer->decode($order->integral),
-                'apply_delete' => $order->apply_delete
+                'apply_delete' => $order->apply_delete,
+                'exchang_url' => $order->exchange_url ?? ''
             ],
         ];
     }
