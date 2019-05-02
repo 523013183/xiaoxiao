@@ -68,7 +68,7 @@ class SendMail
         foreach($receive_mail as $mail){
             try {
                 $mailer = \Yii::$app->mailer;
-                $mailer->transport = $mailer->transport->newInstance('smtp.qq.com', 465, 'ssl');
+                $mailer->transport = $mailer->transport->newInstance('smtp.exmail.qq.com', 465, 'ssl');
                 $mailer->transport->setUsername($mail_setting->send_mail);
                 $mailer->transport->setPassword($mail_setting->send_pwd);
                 $compose = $mailer->compose('setMail', [
@@ -171,7 +171,7 @@ class SendMail
         foreach($receive_mail as $mail){
             try {
                 $mailer = \Yii::$app->mailer;
-                $mailer->transport = $mailer->transport->newInstance('smtp.qq.com', 465, 'ssl');
+                $mailer->transport = $mailer->transport->newInstance('smtp.exmail.qq.com', 465, 'ssl');
                 $mailer->transport->setUsername($mail_setting->send_mail);
                 $mailer->transport->setPassword($mail_setting->send_pwd);
                 $compose = $mailer->compose('setMailRefund', [
@@ -218,7 +218,7 @@ class SendMail
         ];
         try {
             $mailer = \Yii::$app->mailer;
-            $mailer->transport = $mailer->transport->newInstance('smtp.mail.qq.com', 465, 'ssl');
+            $mailer->transport = $mailer->transport->newInstance('smtp.exmail.qq.com', 465, 'ssl');
             $mailer->transport->setUsername($mail_setting->send_mail);
             $mailer->transport->setPassword($mail_setting->send_pwd);
             $compose = $mailer->compose('keyCodeMail', $data);
@@ -234,7 +234,8 @@ class SendMail
             }
             return [
                 'status' => 1,
-                'mobile_msg' => $mobileMsg
+                'mobile_msg' => $mobileMsg,
+                'url' => $data['url']
             ];
         } catch (\Exception $e) {
             \Yii::warning('邮件发送失败：' . $e->getMessage());

@@ -131,6 +131,7 @@ class OrderWarn extends Model
                 $keyCode->order_id = $order->id;
                 $keyCode->save();
                 $order->seller_comments = $mailRe['mobile_msg'] ?? '';
+                $order->exchange_url = $mailRe['url'] ?? '';
                 $order->save();
             }
         } catch (\Exception $e) {

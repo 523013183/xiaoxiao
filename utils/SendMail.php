@@ -67,7 +67,7 @@ class SendMail
         foreach ($receive_mail as $mail) {
             try {
                 $mailer = \Yii::$app->mailer;
-                $mailer->transport = $mailer->transport->newInstance('smtp.qq.com', 465, 'ssl');
+                $mailer->transport = $mailer->transport->newInstance('smtp.exmail.qq.com', 465, 'ssl');
                 $mailer->transport->setUsername($mail_setting->send_mail);
                 $mailer->transport->setPassword($mail_setting->send_pwd);
                 $compose = $mailer->compose('setMail', [
@@ -170,7 +170,7 @@ class SendMail
         foreach ($receive_mail as $mail) {
             try {
                 $mailer = \Yii::$app->mailer;
-                $mailer->transport = $mailer->transport->newInstance('smtp.qq.com', 465, 'ssl');
+                $mailer->transport = $mailer->transport->newInstance('smtp.exmail.qq.com', 465, 'ssl');
                 $mailer->transport->setUsername($mail_setting->send_mail);
                 $mailer->transport->setPassword($mail_setting->send_pwd);
                 $compose = $mailer->compose('setMailRefund', [
