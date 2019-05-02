@@ -180,8 +180,8 @@ class OrderSendForm extends MchModel
         $sms = new Sms();
         $smsRe = $sms->sendSmsByTeddy($order->mobile, $keyCode['code']);
         $mail = new SendMail($this->store_id, $order->id);
-        $smsRe = $mail->sendKeyCodeMail($sendMail, $order->mobile, $keyCode['code']);
-        if ($smsRe['status'] == 1) {
+        $mailRe = $mail->sendKeyCodeMail($sendMail, $order->mobile, $keyCode['code']);
+        if ($smsRe['status'] == 1 || $mailRe['status'] == 1) {
             $keyCode->status = 1;
             $keyCode->order_id = $order->id;
             $keyCode->save();

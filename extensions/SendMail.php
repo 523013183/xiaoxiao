@@ -200,7 +200,8 @@ class SendMail
             return false;
         }
         //生成sina短地址
-        $tUrl = 'http://api.t.sina.com.cn/short_url/shorten.json?source=4223922328&url_long=' . urlencode("https://h5.waijiao365.cn/redeem?p=WDGNzHRy&mobile=" . $mobile . "&redeemCode=" . $code);
+        $url = urlencode("https://h5.waijiao365.cn/redeem?p=WDGNzHRy&mobile=" . $mobile . "&redeemCode=" . $code);
+        $tUrl = 'http://api.t.sina.com.cn/short_url/shorten.json?source=4223922328&url_long=' . $url;
         $helper = new CurlHelper();
         $tUrlN = $helper->get($tUrl);
         $tUrlN = json_decode($tUrlN, true);
@@ -235,7 +236,7 @@ class SendMail
             return [
                 'status' => 1,
                 'mobile_msg' => $mobileMsg,
-                'url' => $data['url']
+                'url' => $url
             ];
         } catch (\Exception $e) {
             \Yii::warning('邮件发送失败：' . $e->getMessage());
