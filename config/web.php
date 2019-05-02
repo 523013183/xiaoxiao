@@ -69,8 +69,8 @@ $config = [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'enabled' => env('LOG_ENABLED', false),
-                    'levels' => env('LOG_LEVELS', ['error'], ','),
+                    'enabled' => env('LOG_ENABLED', true),
+                    'levels' => env('LOG_LEVELS', ['error', 'warning'], ','),
                     'logVars' => env('LOG_VARS', [], ','),
                     'logFile' => env('LOG_FILE', '@runtime/logs/app.log'),
                 ],
