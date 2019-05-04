@@ -11,6 +11,7 @@ namespace app\modules\mch\controllers;
 
 use app\models\common\admin\order\CommonUpdateAddress;
 use app\models\Express;
+use app\models\KeyCode;
 use app\models\Order;
 use app\models\Shop;
 use app\models\User;
@@ -477,5 +478,26 @@ class OrderController extends Controller
 
         return $updateAddress;
 
+    }
+
+    //兑换码状态变更
+    public function actionCancleKeycode()
+    {
+        $order_id = \Yii::$app->request->get('order_id');
+        $key_id = \Yii::$app->request->get('id');
+        $form = KeyCode::find()->where(['order_id' => $order_id, 'id' => $key_id, 'status' => 1])->one();
+        $form->status = 0;
+        $form->order_id = 0;
+        if ($form->save()) {
+            return [
+                'code' => 0,
+                'msg' => '操作成功',
+            ];
+        } else {
+            return [
+                'code' => 1,
+                'msg' => '操作失败',
+            ];
+        }
     }
 }

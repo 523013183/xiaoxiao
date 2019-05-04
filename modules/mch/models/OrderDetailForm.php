@@ -8,6 +8,7 @@
 
 namespace app\modules\mch\models;
 
+use app\models\KeyCode;
 use app\models\Mch;
 use app\models\Order;
 use app\models\OrderDetail;
@@ -48,13 +49,18 @@ class OrderDetailForm extends MchModel
         if ($order['mch_id'] > 0) {
             $mch = Mch::findOne(['store_id' => $this->store_id, 'id' => $order['mch_id']]);
         }
-
+        //获取订单的兑换码
+        $keyInfo = KeyCode::findOne([
+            'order_id' => $this->order_id,
+            'status' => 1
+        ]);
         return [
             'order' => $order,
             'goods_list' => $goods_list,
             'user' => $user,
             'order_form' => $order_form,
-            'mch' => $mch
+            'mch' => $mch,
+            'keyInfo' => $keyInfo
         ];
     }
 }

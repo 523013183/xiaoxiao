@@ -284,6 +284,15 @@ $urlStr = get_plugin_url();
                                 <td>用户</td>
                                 <td><?= $user['nickname'] ?></td>
                             </tr>
+                            <?php if ($keyInfo) : ?>
+                                <tr>
+                                    <td>兑换码</td>
+                                    <td>
+                                        <div><?= $keyInfo['code']; ?></div>
+                                        <div><button type="button" class="badge badge-success btn-key_change">状态重置</button></div>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
                             <tr>
                                 <td>支付方式</td>
                                 <td>
@@ -510,6 +519,33 @@ $urlStr = get_plugin_url();
             type: "get",
             data: {
                 seller_comments: seller_comments,
+            },
+            dataType: "json",
+            success: function (res) {
+                $.myAlert({
+                    content:res.msg,
+                    confirm:function(e){
+                        if(res.code == 0){
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    $('.btn-key_change').on('click', function () {
+        var btn = $(this);
+        btn.btnLoading("正在提交");
+        var order_id = <?= $order_id;?>;
+        var key_id = <?= $keyInfo['id'];?>;
+        var url = "<?=$urlManager->createUrl([$urlStr.'/cancle-keycode'])?>";
+        $.ajax({
+            url: url,
+            type: "get",
+            data: {
+                order_id: order_id,
+                id: key_id
             },
             dataType: "json",
             success: function (res) {
