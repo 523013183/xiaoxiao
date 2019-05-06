@@ -166,6 +166,8 @@ class SendMail
         $store = Store::findOne($this->store_id);
         $receive = str_replace("，", ",", $mail_setting->receive_mail);
         $receive_mail = explode(",", $receive);
+        $order = Order::findOne(['id' => $this->order_id]);
+        $goods_list = $this->getOrderGoodsList($this->order_id);
         $res = true;
         foreach ($receive_mail as $mail) {
             try {
@@ -175,6 +177,8 @@ class SendMail
                 $mailer->transport->setPassword($mail_setting->send_pwd);
                 $compose = $mailer->compose('setMailRefund', [
                     'store_name' => $store->name,
+                    'order' => $order,
+                    'goods_list' => $goods_list
                 ]);
                 $compose->setFrom($mail_setting->send_mail); //要发送给那个人的邮箱
                 $compose->setTo($mail); //要发送给那个人的邮箱
