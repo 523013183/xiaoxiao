@@ -149,8 +149,7 @@ class Pay extends Base
         $args['sign'] = $this->makeSign($args);
         $xml = DataTransform::arrayToXml($args);
         $api = 'https://api.mch.weixin.qq.com/secapi/pay/refund';
-        $re = $this->wechat->curl->post($api, $xml);
-        \Yii::warning('退款：' . json_encode($re));
+        $this->wechat->curl->post($api, $xml);
         if (!$this->wechat->curl->response)
             return false;
         return DataTransform::xmlToArray($this->wechat->curl->response);
