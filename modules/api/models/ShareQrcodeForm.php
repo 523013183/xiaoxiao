@@ -142,7 +142,7 @@ class ShareQrcodeForm extends ApiModel
         $name_size = 30;
         $name_width = 670;
         //商品名称处理换行
-        $name = $this->autowrap($name_size, 0, $font_path, $goods->name, $name_width, 2);
+        $name = $this->autowrap($name_size, 0, $font_path, $goods->name, $name_width, 3);
         //加商品名称
         $editor->text($goods_qrcode, $name, $name_size, 40, 750, new Color('#333333'), $font_path, 0);
 
@@ -167,7 +167,7 @@ class ShareQrcodeForm extends ApiModel
             $goods->price = min($price);
         }
         //加商品价格
-        $editor->text($goods_qrcode, '￥' . $goods->price, 45, 30, 910, new Color('#ff4544'), $font_path, 0);
+        $editor->text($goods_qrcode, '￥' . $goods->price, 45, 30, 920, new Color('#ff4544'), $font_path, 0);
 
         //加商城名称
         $editor->text($goods_qrcode, $store->name, 20, 40, 1170, new Color('#888888'), $font_path, 0);
