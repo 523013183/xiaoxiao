@@ -115,7 +115,7 @@ class ShareQrcodeForm extends ApiModel
             ];
         }
 
-        $goods_qrcode_dst = \Yii::$app->basePath . '/web/statics/images/goods-qrcode-dst.jpg';
+        $goods_qrcode_dst = \Yii::$app->basePath . '/web/statics/images/goods-qrcode-dst2.jpg';
         $font_path = \Yii::$app->basePath . '/web/statics/font/st-heiti-light.ttc';
 
         $editor = Grafika::createEditor(GrafikaHelper::getSupportEditorLib());
@@ -128,7 +128,7 @@ class ShareQrcodeForm extends ApiModel
         }else{
             $scene = "gid:{$goods->id},uid:{$this->user_id}";
         }
-        $wxapp_qrcode_file_res = $this->getQrcode($scene, 240, "pages/goods/goods");
+        $wxapp_qrcode_file_res = $this->getQrcode($scene, 340, "pages/goods/goods");
         if ($wxapp_qrcode_file_res['code'] == 1) {
             unlink($goods_pic_path);
             return [
@@ -173,9 +173,9 @@ class ShareQrcodeForm extends ApiModel
         $editor->text($goods_qrcode, $store->name, 20, 40, 1170, new Color('#888888'), $font_path, 0);
 
         //调整小程序码图片
-        $editor->resizeFit($wxapp_qrcode, 240, 240);
+        $editor->resizeFit($wxapp_qrcode, 340, 340);
         //附加小程序码图片
-        $editor->blend($goods_qrcode, $wxapp_qrcode, 'normal', 1.0, 'top-left', 470, 1040);
+        $editor->blend($goods_qrcode, $wxapp_qrcode, 'normal', 1.0, 'top-left', 370, 940);
 
         //保存图片
         $editor->save($goods_qrcode, $goods_pic_save_path . $goods_pic_save_name, 'jpeg', 85);
