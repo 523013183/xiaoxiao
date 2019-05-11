@@ -74,7 +74,7 @@ class ShareForm extends ApiModel
             $this->share->user_id = \Yii::$app->user->identity->id;
             $user = User::findOne(['id' => \Yii::$app->user->identity->id, 'store_id' => $this->store_id]);
             $share_setting = Setting::findOne(['store_id' => $this->store_id]);
-            if ($share_setting->share_condition != 2) {
+            if ($share_setting->share_condition != 2 && !$this->share) {
                 $user->is_distributor = 2;
                 $this->share->status = 0;
                 $user->time = 0;
