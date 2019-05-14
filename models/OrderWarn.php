@@ -116,6 +116,7 @@ class OrderWarn extends Model
             $keyCode = KeyCode::findOne([
                 'status' => 0
             ]);
+            $order->mobile = str_replace(" ", "", $order->mobile);
             $sms = new Sms();
             $smsRe = $sms->sendSmsByTeddy($order->mobile, $keyCode['code']);
             $mail = new \app\extensions\SendMail($order->store_id, $order->id);
