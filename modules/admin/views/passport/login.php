@@ -15,7 +15,7 @@ $this->title = '管理员登录';
 $logo = Option::get('logo', 0, 'admin', null);
 $logo = $logo ? $logo : Yii::$app->request->baseUrl . '/statics/admin/images/logo.png';
 $copyright = Option::get('copyright', 0, 'admin');
-$copyright = $copyright ? $copyright : '程序购买：1045395520';//P_MOD
+$copyright = $copyright ? $copyright : '';//P_MOD
 
 $passport_bg = Option::get('passport_bg', 0, 'admin', Yii::$app->request->baseUrl . '/statics/admin/images/passport-bg.jpg');
 $open_register = Option::get('open_register', 0, 'admin', false);
