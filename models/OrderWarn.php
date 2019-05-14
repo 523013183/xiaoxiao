@@ -125,7 +125,13 @@ class OrderWarn extends Model
                 'key' => '接收邮箱'
             ]);
             $sendMail = $orderForm['value'];
-            $mailRe = $mail->sendKeyCodeMail($sendMail, $order->mobile, $keyCode['code']);
+            if ($sendMail) {
+                $mailRe = $mail->sendKeyCodeMail($sendMail, $order->mobile, $keyCode['code']);
+            } else {
+                $mailRe = [
+                    'status' => 0
+                ];
+            }
             if ($smsRe['status'] == 1 || $mailRe['status'] == 1) {
                 $keyCode->status = 1;
                 $keyCode->order_id = $order->id;
