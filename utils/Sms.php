@@ -294,7 +294,7 @@ class Sms
         }
         $post_data = [
             "account"=>'td_hmhd',
-            "password"=> md5('hmhd0420'),
+            "password"=> '9699e76157131755704e4733adbe6643',
             "data" => [
                 'sign' => '【华美互动】',
                 "template"=> $template,
