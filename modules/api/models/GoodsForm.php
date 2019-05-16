@@ -126,7 +126,7 @@ class GoodsForm extends ApiModel
             'unit' => $goods->unit,
             'use_attr' => intval($goods->use_attr),
             'mch' => $mch,
-            'max_share_price' => number_format($res['max_share_price'], 2, '.', ''),
+            'max_share_price' => 0,//number_format($res['max_share_price'], 2, '.', ''),
             'min_member_price' => number_format($res['min_member_price'], 2, '.', ''),
             'is_share' => $res['is_share'],
         ];
