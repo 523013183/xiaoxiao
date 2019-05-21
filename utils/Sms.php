@@ -286,11 +286,11 @@ class Sms
         if (isset($tUrlN[0]['url_short'])) {
             $shortUrl = $tUrlN[0]['url_short'];
             $paramData = $shortUrl;
-            $template = '尊敬的用户，您己成功购买的华美一元外教课程，请前往注册确认绑定的手机号{} 当天即可学习，7天无理由退款！';
+            $template = '尊敬的用户，您己成功购买的华美一元外教课程，请前往注册确认绑定的手机号{} 当天即可学习，3天无理由退款！';
         } else {
             $shortUrl = 'http://t.cn/ESM4X70';
             $paramData = $paramData . '##' . $shortUrl;
-            $template = '尊敬的用户，您购买的华美一元外教学习兑换码已生成{},请前往兑换页{}将兑换码复制拷贝并注册下载当天即可登录学习，7天无理由退款！';
+            $template = '尊敬的用户，您购买的华美一元外教学习兑换码已生成{},请前往兑换页{}将兑换码复制拷贝并注册下载当天即可登录学习，3天无理由退款！';
         }
         $post_data = [
             "account"=>'td_hmhd',
