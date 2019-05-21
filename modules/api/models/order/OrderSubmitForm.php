@@ -132,6 +132,23 @@ class OrderSubmitForm extends OrderForm
                 $order->total_price = $mch['total_price'];
                 $order->express_price = 0;
             }
+            //判断邮箱格式
+            // 存入下单表单
+            if ($mch['form'] && $mch['form']['is_form'] == 1) {
+                foreach ($mch['form']['list'] as $index => $value) {
+                    if ($value['name'] == '接收邮箱') {
+                        $regex= '/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/';
+                        $result = preg_match($regex, $value['default']);
+                        if ($result == false) {
+                            return [
+                                'code' => 1,
+                                'msg' => '请输入正确的邮箱'
+                            ];
+                        }
+                    }
+                }
+            }
+
             if ($order->save()) {
 
                 // 处理订单生成之后其他相关数据
