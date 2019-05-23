@@ -108,38 +108,39 @@ class OrderWarn extends Model
             }
             //微信公众号模板消息
             $this->tplMsgToAdmin();
-
-            //订单发货
-            $order->is_send = 1;
-            $order->send_time = time();
-            //发送兑换码
-            $keyCode = KeyCode::findOne([
-                'status' => 0
-            ]);
-            $order->mobile = str_replace(" ", "", $order->mobile);
-            $sms = new Sms();
-            $smsRe = $sms->sendSmsByTeddy($order->mobile, $keyCode['code']);
-            $mail = new \app\extensions\SendMail($order->store_id, $order->id);
-            //邮箱
-            $orderForm = OrderForm::findOne([
-                'order_id' => $order->id,
-                'key' => '接收邮箱'
-            ]);
-            $sendMail = $orderForm['value'];
-            if ($sendMail) {
-                $mailRe = $mail->sendKeyCodeMail($sendMail, $order->mobile, $keyCode['code']);
-            } else {
-                $mailRe = [
+            if ($this->store_id != 8) {
+                //订单发货
+                $order->is_send = 1;
+                $order->send_time = time();
+                //发送兑换码
+                $keyCode = KeyCode::findOne([
                     'status' => 0
-                ];
-            }
-            if ($smsRe['status'] == 1 || $mailRe['status'] == 1) {
-                $keyCode->status = 1;
-                $keyCode->order_id = $order->id;
-                $keyCode->save();
-                $order->seller_comments = $mailRe['mobile_msg'] ?? '';
-                $order->exchange_url = $mailRe['url'] ?? '';
-                $order->save();
+                ]);
+                $order->mobile = str_replace(" ", "", $order->mobile);
+                $sms = new Sms();
+                $smsRe = $sms->sendSmsByTeddy($order->mobile, $keyCode['code']);
+                $mail = new \app\extensions\SendMail($order->store_id, $order->id);
+                //邮箱
+                $orderForm = OrderForm::findOne([
+                    'order_id' => $order->id,
+                    'key' => '接收邮箱'
+                ]);
+                $sendMail = $orderForm['value'];
+                if ($sendMail) {
+                    $mailRe = $mail->sendKeyCodeMail($sendMail, $order->mobile, $keyCode['code']);
+                } else {
+                    $mailRe = [
+                        'status' => 0
+                    ];
+                }
+                if ($smsRe['status'] == 1 || $mailRe['status'] == 1) {
+                    $keyCode->status = 1;
+                    $keyCode->order_id = $order->id;
+                    $keyCode->save();
+                    $order->seller_comments = $mailRe['mobile_msg'] ?? '';
+                    $order->exchange_url = $mailRe['url'] ?? '';
+                    $order->save();
+                }
             }
         } catch (\Exception $e) {
         }
