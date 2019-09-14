@@ -272,7 +272,8 @@ class Sms
      * @param unknown $templateCode
      */
     public function sendSmsByTeddy($mobile, $smsParam){
-        $url = "http://server-usp.teddymobile.cn/api/sms/vSend";
+//        $url = "http://server-usp.teddymobile.cn/api/sms/vSend";
+        $url = "http://server-usp.teddymobile.cn/api/sms/multiSend";
         if (is_array($smsParam)) {
             $paramData = implode("##", $smsParam);
         } else {
@@ -286,13 +287,15 @@ class Sms
         if (isset($tUrlN[0]['url_short'])) {
             $shortUrl = $tUrlN[0]['url_short'];
             $paramData = $shortUrl;
-            $template = '尊敬的用户，您己成功购买的华美一元外教课程，请前往注册确认绑定的手机号{} 当天即可学习！';
+//            $template = '尊敬的用户，您己成功购买的华美一元外教课程，请前往注册确认绑定的手机号{} 当天即可学习！';
+            $template = '恭喜你，课程购买成功！我们的客服人员会第一时间与您联系！你也可以直接添加客服微信：18150380775（手机微信同号）完成课程兑换~';
         } else {
             $shortUrl = 'http://t.cn/ESM4X70';
             $paramData = $paramData . '##' . $shortUrl;
-            $template = '尊敬的用户，您购买的华美一元外教学习兑换码已生成{},请前往兑换页{}将兑换码复制拷贝并注册下载当天即可登录学习！';
+//            $template = '尊敬的用户，您购买的华美一元外教学习兑换码已生成{},请前往兑换页{}将兑换码复制拷贝并注册下载当天即可登录学习！';
+            $template = '恭喜你，课程购买成功！我们的客服人员会第一时间与您联系！你也可以直接添加客服微信：18150380775（手机微信同号）完成课程兑换~';
         }
-        $post_data = [
+        /*$post_data = [
             "account"=>'td_hmhd',
             "password"=> '9699e76157131755704e4733adbe6643',
             "data" => [
@@ -301,6 +304,15 @@ class Sms
                 "param" => [
                     $mobile => $paramData
                 ]
+            ]
+        ];*/
+        $post_data = [
+            "account"=>'td_hmhd',
+            "password"=> '9699e76157131755704e4733adbe6643',
+            "data" => [
+                'phones' => $mobile,
+                'sign' => '【华美互动】',
+                "content"=> $template
             ]
         ];
 
