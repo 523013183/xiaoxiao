@@ -8,6 +8,7 @@
 
 namespace app\modules\api\controllers;
 
+use app\modules\api\behaviors\LoginBehavior;
 use app\opening\ApiResponse;
 use app\opening\BaseApiResponse;
 use app\models\alipay\MpConfig;
@@ -42,8 +43,15 @@ class DefaultController extends Controller
 {
     public function behaviors()
     {
-        return array_merge(parent::behaviors(), [
-        ]);
+        $action = \Yii::$app->controller->action->id;
+        $nologin_action = ["index","navbar","navigation-bar-color", "store"];
+        if (!in_array($action, $nologin_action)) {
+            return array_merge(parent::behaviors(), [
+                'login' => [
+                    'class' => LoginBehavior::className(),
+                ],
+            ]);
+        }
     }
 
     /**
